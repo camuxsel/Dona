@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const session = require('express-session');
 
+
 var usersRouter = require('./routes/users');
 
 const indexRouter = require('./routes/index');
@@ -80,3 +81,11 @@ db.sequelize.sync()
   });
 
 module.exports = app;
+
+
+// Levantamos servidor
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
