@@ -70,7 +70,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+// Levantamos servidor
+
+require('dotenv').config();
+
 const db = require('./database/models');
+
 
 db.sequelize.sync()
   .then(() => {
@@ -80,12 +86,9 @@ db.sequelize.sync()
     console.error("❌ Error al sincronizar:", err);
   });
 
-module.exports = app;
-
-
-// Levantamos servidor
-require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+module.exports = app;
