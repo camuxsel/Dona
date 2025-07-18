@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/stock/agregar-ropa" method="post" class="form-login">
+        <h1>Agregar prenda al stock</h1>
+        <div>
+            <%if (locals.errors && errors.articulo) { %>
+                <p><%= errors.articulo.msg %></p>
+            <% } %>
+            <label for="articulo" class="form-label">Artículo:</label>
+                <input type="text" name="articulo" id="articulo" class="form-input" value="<%= locals.old !== undefined && old.articulo ? old.articulo : '' %>">
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.genero) { %>
+                <p><%= errors.genero.msg %></p>
+            <% } %>
+            <label for="genero" class="form-label">Género:</label>
+                <select name="genero" id="genero">
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.categoria) { %>
+                <p><%= errors.categoria.msg %></p>
+            <% } %>
+            <label for="categoria" class="form-label">Categoria:</label>
+                <select name="categoria" id="categoria">
+                  <option value="Ropa">Ropa</option>
+                  <option value="Calzado">Calzado</option>
+                  <option value="Higiene personal">Higiene personal</option>
+                  <option value="Accesorios">Accesorios</option>
+                </select>
+        </div>
+        <button type="submit" class="button-form">Guardar</button>
+      </form>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

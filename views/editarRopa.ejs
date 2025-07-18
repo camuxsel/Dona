@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/stock/editar-ropa/<%= articulo.id %>" method="post" class="form-login">
+        <h1>Modificar <%= articulo.articulo %> </h1>
+        <div>
+            <%if (locals.errors && errors.articulo) { %>
+                <p><%= errors.articulo.msg %></p>
+            <% } %>
+            <label for="articulo" class="form-label">Artículo:</label>
+                <input type="text" name="articulo" id="articulo" class="form-input" value="<%= (locals.old !== undefined && old.articulo) ? old.articulo : articulo.articulo %>">
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.genero) { %>
+                <p><%= errors.genero.msg %></p>
+            <% } %>
+            <label for="genero" class="form-label">Género:</label>
+                <select name="genero" id="genero">
+                    <option value="Femenino" <%= articulo.genero === 'Femenino' ? 'selected' : '' %>>Femenino</option>
+                    <option value="Masculino" <%= articulo.genero === 'Masculino' ? 'selected' : '' %>>Masculino</option>            
+                </select>
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.categoria) { %>
+                <p><%= errors.categoria.msg %></p>
+            <% } %>
+            <label for="categoria" class="form-label">Categoria:</label>
+                <select name="categoria" id="categoria">
+                    <option value="Ropa" <%= articulo.categoria === 'Ropa' ? 'selected' : '' %>>Ropa</option>
+                    <option value="Calzado" <%= articulo.categoria === 'Calzado' ? 'selected' : '' %>>Calzado</option>            
+                </select>
+        </div>
+        
+        <div class="divs-form">
+            <h2>Talles disponibles</h2>
+            <div id="contenedorTalles">
+                <% if(articulo.talles.length <= 0 ) {%>
+                    <p>No hay talles disponibles</p>
+                <% } else {%>
+                    <% articulo.talles.forEach(function(talle, index) { %>
+                        <div class="divs-talles">
+                            <div class="talle-box">
+                            <!-- Input oculto con el ID del talle -->
+                            <input type="hidden" name="talle_id" value="<%= talle.id %>">
+                    
+                            <div class="input-group">
+                                <label for="talle-<%= index %>">Talle:</label>
+                                <input type="text" name="talles" value="<%= talle.talle %>" class="form-input inputEditarRopa" required>
+                            </div>
+                    
+                            <div class="input-group">
+                                <label for="cantidad-<%= index %>">Cantidad:</label>
+                                <input type="number" name="cantidades" value="<%= talle.cantidad %>" class="form-input inputEditarRopa" required>
+                            </div>
+                            </div>
+                            <form action="/stock/eliminar-talle/<%= talle.id %>" method="post" onsubmit="return confirm('¿Estás segura que querés eliminar este talle?')">
+                                <button type="submit" class="btn-sm btn-danger">🗑️</button>
+                            </form>
+                        </div>
+                    <% }) %>    
+                <% } %>
+                   
+            </div>
+            <button type="submit" class="button-form">Guardar</button>
+          </div>
+    </form>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

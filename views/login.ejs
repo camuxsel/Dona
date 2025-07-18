@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<body>
+    <div>
+        <!-- Formulario login-->
+        <form action="/profile/login" method="post">
+        <h1>Iniciar sesión</h1>
+        <div>
+            <%if (locals.errors && errors.email) { %>
+            <p><%= errors.email.msg %></p>
+            <% } %>
+            <label for="email" class="form-label">Ingrese su email:</label>
+            <input id="email" type="email" name="email" class="form-input"
+            value="<%= locals.old !== undefined && old.email ? old.email : '' %>">
+        </div>
+        <div class="divs-form">
+            <% if(locals.errors && errors.password){ %>
+            <p><%= errors.password.msg %></p>
+            <% } %>
+            <label for="password" class="form-label">Ingrese su contraseña:</label>
+            <input type="password" name="password" id="password" class="form-input"
+            value="<%= locals.old !== undefined && old.password ? old.password : '' %>">
+        </div>
+        <div class="recordarForm">
+            <input type="checkbox" id="recordar" name="recordar" class="recordarCheck" value="recordar">
+            <label for="recordar" class="form-label">Recordarme</label>
+        </div>
+        <div>
+            <button type="submit" class="button-form">Login</button>
+        </div>
+        </form>
+    </div>
+    
+    <div class="irRegistrar">
+        <p>¿No tienes cuenta?</p>
+        <a href="/profile/register" class="form-label">Registrate</a>
+    </div>
+
+    <!-- footer -->
+	<%- include('./partials/footer') %>
+    
+</body>
+</html>

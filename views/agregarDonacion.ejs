@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/donaciones/agregar-donacion" method="post" class="form-login">
+        <h1>Agregar donación</h1>
+        <div class="divs-form">
+            <%if (locals.errors && errors.beneficiario) { %>
+                <p><%= errors.beneficiario.msg %></p>
+            <% } %>
+            <label for="beneficiario" class="form-label">Nombre del beneficiario:</label>
+            <input type="text" name="beneficiario" id="beneficiario" class="form-input" value="<%= locals.old !== undefined && old.beneficiario ? old.beneficiario : '' %>">
+        </div>
+
+        <div class="divs-form">
+            <label for="observaciones" class="form-label">Observaciones:</label>
+            <input type="text" name="observaciones" id="observaciones" class="form-input" value="<%= locals.old !== undefined && old.observaciones ? old.observaciones : '' %>">
+        </div>
+
+        <div class="divs-form">
+            <%if (locals.errors && errors.categoria) { %>
+                <p><%= errors.categoria.msg %></p>
+            <% } %>
+            <label for="categoria" class="form-label">Categoría:</label>
+                <select name="categoria" id="categoria">
+                  <option value="Ropa">Ropa</option>
+                  <option value="Alimentos">Alimentos</option>
+                </select>
+        </div>
+
+        <div id="articulosContainer" class="divs-form">
+            <!-- Artículos seleccionados se agregan acá -->
+          </div>
+          
+          <!-- Selects ocultos para clonar -->
+          <div id="selectsOcultos" style="display: none;">
+            <div id="selectRopaOriginal">
+              <select name="articulo_id" class="form-input">
+                <% stockRopa.forEach(function(ropa) { %>
+                  <% ropa.talles.forEach(function(talle) { %>
+                    <option value="<%= talle.id %>">
+                      <%= ropa.articulo %>, <%= ropa.genero %> - Talle <%= talle.talle %> (Stock: <%= talle.cantidad %>)
+                    </option>
+                  <% }) %>
+                <% }) %>
+              </select>
+            </div>
+          
+            <div id="selectComidaOriginal">
+              <select name="articulo_id" class="form-input">
+                <% stockComida.forEach(function(comida) { %>
+                  <option value="<%= comida.id %>">
+                    <%= comida.articulo %> (Stock: <%= comida.cantidad %>)
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          
+          <button type="button" class="button-form" onclick="agregarArticulo()">➕ Agregar Artículo</button>
+    
+        <button type="submit" class="button-form">Guardar donación</button>
+    </form>
+
+    <script>
+        function reiniciarArticulos() {
+        document.getElementById('articulosContainer').innerHTML = '';
+        }
+
+        function agregarArticulo() {
+            const categoria = document.getElementById('categoria').value;
+            const contenedor = document.getElementById('articulosContainer');
+
+            if (!categoria) {
+            alert('Seleccioná una categoría primero');
+            return;
+            }
+
+            let selectClone;
+
+            if (categoria === 'Ropa') {
+            selectClone = document.getElementById('selectRopaOriginal').firstElementChild.cloneNode(true);
+            } else if (categoria === 'Alimentos') {
+            selectClone = document.getElementById('selectComidaOriginal').firstElementChild.cloneNode(true);
+            }
+
+            // Agregar campo para cantidad
+            const cantidadInput = document.createElement('input');
+            cantidadInput.type = 'number';
+            cantidadInput.name = 'cantidad';
+            cantidadInput.placeholder = 'Cantidad';
+            cantidadInput.required = true;
+            cantidadInput.classList.add('form-input');
+
+            const div = document.createElement('div');
+            div.classList.add('divs-form');
+            div.appendChild(selectClone);
+            div.appendChild(cantidadInput);
+
+            contenedor.appendChild(div);
+        }
+    </script>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

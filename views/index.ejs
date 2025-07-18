@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<% if(locals.user !=undefined) { %>
+    <!-- Include Header -->
+    <%- include('./partials/header') %>
+    <div class="bienvenidaInicio">
+        <h1>Bienvenido/a <%= locals.user.userName %> a la Obra de Piedad </h1>
+        <h1>Asamblea Cristiana - José Ingenieros</h1>
+        <h2>"Encomienda a Jehová tu camino, y confía en Él; y Él hará." </h2>
+        <h2>~ Salmos 37:5 ~</h2>
+    </div>
+
+<% } else { %>
+    <body>
+        <div class="bienvenidaInicio">
+            <h1>Bienvenido a la Obra de Piedad </h1>
+            <h1>Asamblea Cristiana - José Ingenieros</h1>
+            <h2>"Encomienda a Jehová tu camino, y confía en Él; y Él hará." </h2>
+            <h2>~ Salmos 37:5 ~</h2>
+        </div>
+
+    <div>
+        <!-- Formulario login-->
+        <form action="/profile/login" method="post" class="form-login">
+        <h1>Iniciar sesión</h1>
+        <div>
+            <%if (locals.errors && errors.email) { %>
+            <p><%= errors.email.msg %></p>
+            <% } %>
+            <label for="email" class="form-label">Ingrese su email:</label>
+            <input id="email" type="email" name="email" class="form-input"
+            value="<%= locals.old !== undefined && old.email ? old.email : '' %>">
+        </div>
+        <div class="divs-form">
+            <% if(locals.errors && errors.password){ %>
+            <p><%= errors.password.msg %></p>
+            <% } %>
+            <label for="password" class="form-label">Ingrese su contraseña:</label>
+            <input type="password" name="password" id="password" class="form-input"
+            value="<%= locals.old !== undefined && old.password ? old.password : '' %>">
+        </div>
+        <div class="recordarForm">
+            <input type="checkbox" id="recordar" name="recordar" class="recordarCheck" value="recordar">
+            <label for="recordar" class="form-label">Recordarme</label>
+        </div>
+        <div>
+            <button type="submit" class="button-form">Login</button>
+        </div>
+        </form>
+    </div>
+
+    <div class="irRegistrar">
+        <p>¿No tienes cuenta?</p>
+        <a href="/profile/register" class="form-label">Registrate</a>
+    </div>
+    </body>	
+    <!-- footer -->
+    <%- include('./partials/footer') %>
+<% } %>
+</html>

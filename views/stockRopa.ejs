@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+  <h1>👔👗 Stock de Ropa</h1>
+  <div class="'accionesStock">
+    <a href="/stock/agregar-ropa" class="btn-stock">➕ Agregar artículo</a>
+  </div>
+
+    <% if (ropa.length === 0) { %>
+      <p>No hay prendas registradas por el momento.</p>
+    <% } else { %>
+      <table class="tablaStock">
+        <thead class="headTablaStock">
+          <tr>
+            <th class="columnasStock">Artículo</th>
+            <th class="columnasStock">Género</th>
+            <th class="columnasStock">Categoría</th>
+            <th class="columnasStock">Talles disponibles</th>
+            <th class="columnasStock">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% ropa.forEach(function(item) { %>
+            <tr class="filasStock">
+              <td class="itemsTabla"><%= item.articulo %></td>
+              <td class="itemsTabla"><%= item.genero %></td>
+              <td class="itemsTabla"><%= item.categoria %></td>
+
+              <td class="itemsTabla">
+                <% if (item.talles && item.talles.length > 0) { %>
+                  <ul style="list-style: none; padding-left: 0;">
+                    <% item.talles.forEach(function(talle) { %>
+                      <li><strong><%= talle.talle %>:</strong> <%= talle.cantidad %>u</li>
+                    <% }) %>
+                  </ul>
+                <% } else { %>
+                  <p>Sin talles</p>
+                <% } %>
+              </td>
+
+              <td class="itemsTabla acciones">
+                <a href="/stock/editar-ropa/<%= item.id %>" class="btn-sm">✏️ Editar</a>
+                <a href="/stock/agregar-talle/<%= item.id %>" class="btn-sm">✏️ Agregar talle</a>
+                <form action="/stock/eliminar-ropa/<%= item.id %>" method="post" style="display:inline;">
+                  <button type="submit" class="btn-sm btn-danger" onclick="return confirm('¿Estás segura que querés eliminar esta prenda?')">🗑️</button>
+                </form>
+              </td>
+
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

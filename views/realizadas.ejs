@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+  <h1>❤️ Donaciones realizadas</h1>
+  <div class="accionesStock">
+    <a href="/donaciones/agregar-donacion" class="btn-stock">➕ Nueva donación</a>
+  </div>
+
+    <% if (donaciones.length === 0) { %>
+      <p>No se han realizado donaciones por el momento.</p>
+    <% } else { %>
+      <table class="tablaStock">
+        <thead class="headTablaStock">
+          <tr>
+            <th class="columnasStock">Fecha</th>
+            <th class="columnasStock">Beneficiario</th>
+            <th class="columnasStock">Categoría</th>
+            <th class="columnasStock">Artículos donados</th>
+            <th class="columnasStock">Observaciones</th>
+            <th class="columnasStock">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% donaciones.forEach(function(item) { %>
+              <tr class="filasStock">
+                <td class="itemsTabla"><%= item.fecha.toLocaleDateString('es-AR') %></td>
+                <td class="itemsTabla"><%= item.beneficiario %></td>
+                <td class="itemsTabla"><%= item.categoria %></td>
+                <td class="itemsTabla">
+                  <ul style="list-style: none;">
+                    <% item.items.forEach(function(art) { %>
+                      <li>
+                        <%= art.articulo %>
+                        <% if (art.talle) { %> - Talle <%= art.talle %><% } %>
+                        - Cantidad: <%= art.cantidad %>
+                      </li>
+                    <% }) %>
+                  </ul>
+                </td>
+                <td class="itemsTabla">
+                  <% if (item.observaciones && item.observaciones.length > 0) { %>
+                    <%= item.observaciones %>
+                  <% } else { %>
+                    <p>Sin observaciones</p>
+                  <% } %>
+                </td>
+
+                <td class="itemsTabla acciones">
+                  <a href="/donaciones/editar-donacion/<%= item.id %>" class="btn-sm">✏️ Editar</a>
+                  <form action="/donaciones/eliminar-donacion/<%= item.id %>" method="post" style="display:inline;">
+                    <button type="submit" class="btn-sm btn-danger" onclick="return confirm('¿Estás segura que querés eliminar esta donación?')">🗑️</button>
+                  </form>
+                </td>
+              </tr>
+              
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

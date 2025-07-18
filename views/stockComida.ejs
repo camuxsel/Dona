@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+  <h1>🍎 Stock de Comida</h1>
+  <div class="'accionesStock">
+    <a href="/stock/agregar-comida" class="btn-stock">➕ Agregar artículo</a>
+  </div>
+
+    <% if (comida.length === 0) { %>
+      <p>No hay alimentos registrados por el momento.</p>
+    <% } else { %>
+      <table class="tablaStock">
+        <thead class="headTablaStock">
+          <tr>
+            <th class="columnasStock">Artículo</th>
+            <th class="columnasStock">Cantidad</th>
+            <th class="columnasStock">Fecha de vencimiento</th>
+            <th class="columnasStock">Observaciones</th>
+            <th class="columnasStock">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% comida.forEach(function(item) { %>
+            <tr class="filasStock">
+              <td class="itemsTabla"><%= item.articulo %></td>
+              <td class="itemsTabla"><%= item.cantidad %></td>
+              <td class="itemsTabla"><%= item.fecha_vencimiento.toLocaleDateString('es-AR') %></td>
+
+              <td class="itemsTabla">
+                <% if (item.observaciones && item.observaciones.length > 0) { %>
+                  <%= item.observaciones %>
+                <% } else { %>
+                  <p>Sin observaciones</p>
+                <% } %>
+              </td>
+
+              <td class="itemsTabla acciones">
+                <a href="/stock/editar-comida/<%= item.id %>" class="btn-sm">✏️ Editar</a>
+                <form action="/stock/eliminar-comida/<%= item.id %>" method="post" style="display:inline;">
+                  <button type="submit" class="btn-sm btn-danger" onclick="return confirm('¿Estás seguro que querés eliminar este alimento?')">🗑️</button>
+                </form>
+              </td>
+
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

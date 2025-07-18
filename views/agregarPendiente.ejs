@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/donaciones/agregar-pedido" method="post" class="form-login">
+        <h1>Agregar pedido</h1>
+        <div class="divs-form">
+            <%if (locals.errors && errors.nombre_solicitante) { %>
+                <p><%= errors.nombre_solicitante.msg %></p>
+            <% } %>
+            <label for="nombre_solicitante" class="form-label">Nombre del solicitante:</label>
+            <input type="text" name="nombre_solicitante" id="nombre_solicitante" class="form-input" value="<%= locals.old !== undefined && old.nombre_solicitante ? old.nombre_solicitante : '' %>">
+        </div>
+
+        <div class="divs-form">
+            <%if (locals.errors && errors.siervo_encargado) { %>
+                <p><%= errors.siervo_encargado.msg %></p>
+            <% } %>
+            <label for="siervo_encargado" class="form-label">Siervo encargado:</label>
+            <input type="text" name="siervo_encargado" id="siervo_encargado" class="form-input" value="<%= locals.old !== undefined && old.siervo_encargado ? old.siervo_encargado : '' %>">
+        </div>
+
+        <div class="divs-form">
+            <%if (locals.errors && errors.categoria) { %>
+                <p><%= errors.categoria.msg %></p>
+            <% } %>
+            <label for="categoria" class="form-label">Categoria:</label>
+                <select name="categoria" id="categoria">
+                  <option value="Ropa">Ropa</option>
+                  <option value="Alimentos">Alimentos</option>
+                </select>
+        </div>
+
+        <div class="divs-form">
+            <%if (locals.errors && errors.necesidad) { %>
+                <p><%= errors.necesidad.msg %></p>
+            <% } %>
+            <label for="necesidad" class="form-label">Necesidad:</label>
+            <input type="text" name="necesidad" id="necesidad" class="form-input" value="<%= locals.old !== undefined && old.necesidad ? old.necesidad : '' %>">
+        </div>
+
+        <div class="divs-form">
+            <%if (locals.errors && errors.direccion) { %>
+                <p><%= errors.direccion.msg %></p>
+            <% } %>
+            <label for="direccion" class="form-label">Dirección:</label>
+            <input type="text" name="direccion" id="direccion" class="form-input" value="<%= locals.old !== undefined && old.direccion ? old.direccion : '' %>">
+        </div>
+
+        <button type="submit" class="button-form">Guardar</button>
+      </form>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

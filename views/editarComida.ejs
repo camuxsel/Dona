@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/stock/editar-comida/<%= articulo.id %>" method="post" class="form-login">
+        <h1>Modificar <%= articulo.articulo %> </h1>
+        <div>
+            <%if (locals.errors && errors.articulo) { %>
+                <p><%= errors.articulo.msg %></p>
+            <% } %>
+            <label for="articulo" class="form-label">Artículo:</label>
+                <input type="text" name="articulo" id="articulo" class="form-input" value="<%= (locals.old !== undefined && old.articulo) ? old.articulo : articulo.articulo %>">
+        </div>
+
+        <div>
+            <%if (locals.errors && errors.cantidad) { %>
+                <p><%= errors.cantidad.msg %></p>
+            <% } %>
+            <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="text" name="cantidad" id="cantidad" class="form-input" value="<%= (locals.old !== undefined && old.cantidad) ? old.cantidad : articulo.cantidad %>">
+        </div>
+
+        <div>
+            <label for="observaciones" class="form-label">Observaciones:</label>
+                <input type="text" name="observaciones" id="observaciones" class="form-input" value="<%= (locals.old !== undefined && old.observaciones) ? old.observaciones : articulo.observaciones %>">
+        </div>
+
+        <div>
+            <%if (locals.errors && errors.fecha_vencimiento) { %>
+                <p><%= errors.fecha_vencimiento.msg %></p>
+            <% } %>
+            <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento:</label>
+                <input type="text" name="fecha_vencimiento" id="fecha_vencimiento" class="form-input" value="<%= (locals.old !== undefined && old.fecha_vencimiento) ? old.fecha_vencimiento : articulo.fecha_vencimiento.toLocaleDateString('es-AR') %>">
+        </div>
+
+        <button type="submit" class="button-form">Guardar</button>
+    </form>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

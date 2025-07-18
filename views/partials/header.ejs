@@ -1,0 +1,47 @@
+<!-- Header -->
+<header>
+
+    <div class="dataHeader">
+        <a href="/" >
+            <img src="/images/logoObraDePiedad.jpeg" class="imgHeader">
+        </a>
+        <div class="titulosHeader">
+            <h1 class="tituloHeader">Obra de Piedad - José Ingenieros</h1>
+            <p class="versiculoHeader">"Encomienda a Jehová tu camino, y confía en Él; y Él hará." ~ Salmos 37:5 ~</p>
+        </div>
+    </div>
+
+    <nav class="main-navbar">
+        <% if(locals.user !=undefined) { %>
+            <h1>Bienvenido/a <%= locals.user.userName %></h1>
+            <ul class="right-navbar">
+                <li> <a href="/stock/ropa">Stock de ropa</a></li>
+                <li> <a href="/stock/comida">Stock de comida</a></li>
+                <li> <a href="/donaciones/pendientes">Donaciones pendientes</a></li>
+                <li> <a href="/donaciones/realizadas">Donaciones realizadas</a></li>
+                <li><a href="/profile/detallePerfil/<%= locals.user.id %>">
+                    <%= locals.user.userName %> > <i class="fas fa-user"></i>
+                    </a>
+                </li>
+                <form action="/profile/logout" method="post" class="logout">
+                    <button class="logout-button" type="submit">
+                        Cerrar sesión <i class="fas fa-sign-in-alt"></i>
+                    </button>
+                </form>
+            </ul>
+        <% } else { %>
+            <ul >
+                <li>
+                    <a href="/profile/register">Creá tu cuenta <i class="far fa-address-card"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="/">Ingresá <i class="fas fa-sign-in-alt"></i></a>
+                </li>
+            </ul>
+        <% } %>
+                
+        
+    </nav>
+</header>
+<!-- /Header -->

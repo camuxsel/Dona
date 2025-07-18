@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<body>
+	<!-- Header -->
+	<%- include('./partials/header') %>
+
+    <!-- Formulario de register -->
+    <form action="/profile/register" method="post" class="formRegister">
+        <h1>Registrarse</h1>
+        <div class="divs-form">
+            <%if (locals.errors && errors.email) { %>
+                <p><%= errors.email.msg %></p>
+            <% } %>
+            <label for="email" class="form-label">Ingrese su email:</label>
+            <input id="email" type="email" name="email" class="form-input"
+            value="<%= locals.old !== undefined && old.email ? old.email : '' %>">
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.usuario) { %>
+                <p><%= errors.usuario.msg %></p>
+            <% } %>
+            <label for="nombreUsuario" class="form-label">Ingrese un nombre de usuario:</label>
+            <input type="text" name="nombreUsuario" id="nombreUsuario" class="form-input"
+            value="<%= locals.old !== undefined && old.usuario ? old.usuario : '' %>">
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.password) { %>
+                <p><%= errors.password.msg %></p>
+            <% } %>
+            <label for="password" class="form-label">Ingrese una contraseña:</label>
+            <input type="password" name="password" id="password" class="form-input"
+            value="<%= locals.old !== undefined && old.password ? old.password : '' %>">
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.rol) { %>
+                <p><%= errors.rol.msg %></p>
+            <% } %>
+            <label for="rol" class="form-label">Seleccione su rol:</label>
+            <select name="rol" id="rol" class="form-input">
+                <option value="administrador">Administrador</option>
+                <option value="colaborador">Colaborador</option>
+            </select>
+        </div>
+        <div class="divs-form">
+            <%if (locals.errors && errors.codigo) { %>
+                <p><%= errors.codigo.msg %></p>
+            <% } %>
+            <label for="codigo" class="form-label">Ingrese el código de seguridad:</label>
+            <input type="password" name="codigo" id="codigo" class="form-input">
+        </div>
+        <div>
+            <button type="submit" class="button-form">Crear cuenta</button>
+        </div>
+    </form>
+
+	<!-- footer -->
+	<%- include('./partials/footer') %>
+
+</body>
+</html>

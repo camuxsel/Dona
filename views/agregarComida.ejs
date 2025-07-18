@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+
+    <form action="/stock/agregar-comida" method="post" class="form-login">
+        <h1>Agregar comida al stock</h1>
+        <div>
+            <%if (locals.errors && errors.articulo) { %>
+                <p><%= errors.articulo.msg %></p>
+            <% } %>
+            <label for="articulo" class="form-label">Artículo:</label>
+                <input type="text" name="articulo" id="articulo" class="form-input" value="<%= locals.old !== undefined && old.articulo ? old.articulo : '' %>">
+        </div>
+
+        <div>
+            <%if (locals.errors && errors.cantidad) { %>
+                <p><%= errors.cantidad.msg %></p>
+            <% } %>
+            <label for="cantidad" class="form-label">Cantidad:</label>
+                <input type="number" name="cantidad" id="cantidad" class="form-input" value="<%= locals.old !== undefined && old.cantidad ? old.cantidad : '' %>">
+        </div>
+
+        <div>
+            <%if (locals.errors && errors.observaciones) { %>
+                <p><%= errors.observaciones.msg %></p>
+            <% } %>
+            <label for="observaciones" class="form-label">Observaciones:</label>
+                <input type="text" name="observaciones" id="observaciones" class="form-input" value="<%= locals.old !== undefined && old.observaciones ? old.observaciones : '' %>">
+        </div>
+
+        <div>
+            <%if (locals.errors && errors.fecha_vencimiento) { %>
+                <p><%= errors.fecha_vencimiento.msg %></p>
+            <% } %>
+            <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento:</label>
+                <input type="date" name="fecha_vencimiento" id="fecha_vencimiento" class="form-input" value="<%= locals.old !== undefined && old.fecha_vencimiento ? old.fecha_vencimiento : '' %>">
+        </div>
+        
+        <button type="submit" class="button-form">Guardar</button>
+      </form>
+
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

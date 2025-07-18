@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+  <h1>❤️ Donaciones pendientes</h1>
+  <div class="'accionesStock">
+    <a href="/donaciones/agregar-pedido" class="btn-stock">➕ Nuevo pedido</a>
+  </div>
+
+    <% if (pendientes.length === 0) { %>
+      <p>No hay pedidos pendientes por el momento.</p>
+    <% } else { %>
+      <table class="tablaStock">
+        <thead class="headTablaStock">
+          <tr>
+            <th class="columnasStock">Fecha</th>
+            <th class="columnasStock">Solicitante</th>
+            <th class="columnasStock">Siervo encargado</th>
+            <th class="columnasStock">Dirección</th>
+            <th class="columnasStock">Categoría</th>
+            <th class="columnasStock">Necesidad</th>
+            <th class="columnasStock">Estado</th>
+            <th class="columnasStock">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% pendientes.forEach(function(item) { %>
+            <% if(item.estado != 'Completado') {%>
+              <tr class="filasStock">
+                <td class="itemsTabla"><%= item.fecha.toLocaleDateString('es-AR') %></td>
+                <td class="itemsTabla"><%= item.nombre_solicitante %></td>
+                <td class="itemsTabla"><%= item.siervo_encargado %></td>
+                <td class="itemsTabla"><%= item.direccion %></td>
+                <td class="itemsTabla"><%= item.categoria %></td>
+                <td class="itemsTabla"><%= item.necesidad %></td>
+                <td class="itemsTabla"><%= item.estado %></td>
+
+                <td class="itemsTabla acciones">
+                  <a href="/donaciones/editar-pedido/<%= item.id %>" class="btn-sm">✏️ Editar</a>
+                  <form action="/donaciones/completar-pendiente/<%= item.id %>" method="post" style="display:inline; background-color: green;" class="logout">
+                    <button type="submit" class="logout-button">Marcar como completado</button>
+                  </form>
+                  <form action="/donaciones/eliminar-pendiente/<%= item.id %>" method="post" style="display:inline;">
+                    <button type="submit" class="btn-sm btn-danger" onclick="return confirm('¿Estás segura que querés eliminar este pedido?')">🗑️</button>
+                  </form>
+                </td>
+              </tr>
+              
+            <% }%>  
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+
+    
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>

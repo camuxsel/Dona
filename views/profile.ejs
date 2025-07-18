@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<!-- Include Head -->
+<%- include('./partials/head') %>
+
+<!-- Include Header -->
+<%- include('./partials/header') %>
+<body>
+<!-- Datos del usuario -->
+<section class="info-usuario container products-wrapper">
+    <h1> <%= usuario.nombreUsuario %> </h1>
+        <% if (locals.user && locals.user.id === usuario.id) { %>
+            <a href="/profile/profile-edit/<%= usuario.id %>">
+                <i class="fas fa-cog"></i>Editar perfil
+            </a>
+        <% } %>
+    </h1>
+
+
+</section>
+<!-- /Datos del usuario -->
+</body>
+<!-- footer -->
+<%- include('./partials/footer') %>
+
+</html>
